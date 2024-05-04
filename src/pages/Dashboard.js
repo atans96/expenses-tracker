@@ -93,73 +93,79 @@ const Dashboard = () => {
     }
   };
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-md shadow-md">
-        <h1 className="text-3xl font-bold mb-4">Welcome to the Dashboard</h1>
-        <button
-          className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition-colors duration-300"
-          onClick={() => logoutUser().then(() => navigate('/'))}
-        >
-          Logout
-        </button>
-        <p className="mb-4">
-          You are currently logged in as <span className="font-bold">{currentUser?.email || 'Loading...'}</span>.
-        </p>
-
-        <div className="mb-6">
-          <h2 className="text-xl font-bold mb-2">Total Expenses</h2>
-          <p className="text-2xl font-bold">${typeof totalExpenses === 'number' ? totalExpenses.toFixed(2) : '0.00'}</p>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-4 sm:p-6 md:p-8 rounded-md shadow-md w-full max-w-4xl">
+        <h1 className="text-3xl font-bold mb-4 text-center sm:text-4xl">Welcome to the Dashboard</h1>
+        <div className="flex flex-col justify-center text-center items-center mb-6">
+          <button
+            className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition-colors duration-300"
+            onClick={() => logoutUser().then(() => navigate('/'))}
+          >
+            Logout
+          </button>
+          <p className="mb-4 sm:mb-0">
+            You are currently logged in as <span className="font-bold">{currentUser?.email || 'Loading...'}</span>.
+          </p>
         </div>
 
         <div className="mb-6">
-          <h2 className="text-xl font-bold mb-2">Expenses by Category</h2>
+          <h2 className="text-xl font-bold mb-2 sm:text-2xl">Total Expenses</h2>
+          <p className="text-2xl font-bold sm:text-3xl">
+            ${typeof totalExpenses === 'number' ? totalExpenses.toFixed(2) : '0.00'}
+          </p>
+        </div>
+
+        <div className="mb-6">
+          <h2 className="text-xl font-bold mb-2 sm:text-2xl">Expenses by Category</h2>
           {expenses.length > 0 ? (
-            <table className="w-full">
-              <thead>
-                <tr>
-                  <th className="py-2 px-4 bg-gray-200 text-left">Date</th>
-                  <th className="py-2 px-4 bg-gray-200 text-left">Description</th>
-                  <th className="py-2 px-4 bg-gray-200 text-left">Category</th>
-                  <th className="py-2 px-4 bg-gray-200 text-right">Amount</th>
-                  <th className="py-2 px-4 bg-gray-200 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {expenses.map((expense) => (
-                  <tr key={expense.id} className="border-b border-gray-200">
-                    <td className="py-3 px-4 font-medium">
-                      {expense.createdAt && expense.createdAt.toDate().toLocaleDateString()}
-                    </td>
-                    <td className="py-3 px-4">{expense.description}</td>
-                    <td className="py-3 px-4">{expense.category}</td>
-                    <td className="py-3 px-4 text-right font-medium">
-                      ${typeof expense.amount === 'number' ? expense.amount.toFixed(2) : '0.00'}
-                    </td>
-                    <td className="py-3 px-4 text-right">
-                      <button
-                        className="bg-blue-500 text-white py-1 px-2 rounded-md hover:bg-blue-600 transition-colors duration-300 mr-2"
-                        onClick={() => handleOpenModal(expense)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="bg-red-500 text-white py-1 px-2 rounded-md hover:bg-red-600 transition-colors duration-300"
-                        onClick={() => handleDeleteExpense(expense.iid)}
-                      >
-                        Delete
-                      </button>
-                    </td>
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr>
+                    <th className="py-2 px-4 bg-gray-200 text-left">Date</th>
+                    <th className="py-2 px-4 bg-gray-200 text-left">Description</th>
+                    <th className="py-2 px-4 bg-gray-200 text-left">Category</th>
+                    <th className="py-2 px-4 bg-gray-200 text-right">Amount</th>
+                    <th className="py-2 px-4 bg-gray-200 text-right">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {expenses.map((expense) => (
+                    <tr key={expense.id} className="border-b border-gray-200">
+                      <td className="py-3 px-4 font-medium">
+                        {expense.createdAt && expense.createdAt.toDate().toLocaleDateString()}
+                      </td>
+                      <td className="py-3 px-4">{expense.description}</td>
+                      <td className="py-3 px-4">{expense.category}</td>
+                      <td className="py-3 px-4 text-right font-medium">
+                        ${typeof expense.amount === 'number' ? expense.amount.toFixed(2) : '0.00'}
+                      </td>
+                      <td className="py-3 px-4 text-right">
+                        <button
+                          className="bg-blue-500 text-white py-1 px-2 rounded-md hover:bg-blue-600 transition-colors duration-300 mr-2"
+                          onClick={() => handleOpenModal(expense)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="bg-red-500 text-white py-1 px-2 rounded-md hover:bg-red-600 transition-colors duration-300"
+                          onClick={() => handleDeleteExpense(expense.iid)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           ) : (
             <p>No expenses found.</p>
           )}
         </div>
 
         <button
-          className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors duration-300"
+          className="w-full py-2 px-4 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 transition-colors duration-300 sm:w-auto"
           onClick={() => handleOpenModal()}
         >
           Add New Expense
@@ -168,13 +174,13 @@ const Dashboard = () => {
         {showModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center">
             <div className="absolute inset-0 bg-gray-800 opacity-75" onClick={handleCloseModal}></div>
-            <div className="bg-white p-6 rounded-md shadow-md z-50">
+            <div className="bg-white p-6 rounded-md shadow-md z-50 w-full max-w-lg">
               <ExpenseForm onClose={handleExpenseSubmitted} expense={selectedExpense} />
             </div>
           </div>
         )}
       </div>
-      <div className="mb-6">
+      <div className="mt-8 w-full max-w-4xl">
         <SpendingBreakdown
           fetchExpenseData={fetchExpenseDataVisual}
           expenseData={expenseData}

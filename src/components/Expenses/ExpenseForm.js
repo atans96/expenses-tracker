@@ -101,8 +101,8 @@ const ExpenseForm = ({ onClose, expense }) => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-md shadow-md">
-      <h2 className="text-xl font-bold mb-4">Add New Expense</h2>
+    <div className="bg-white p-4 sm:p-6 rounded-md shadow-md">
+      <h2 className="text-xl sm:text-2xl font-bold mb-4">Add New Expense</h2>
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
