@@ -4,6 +4,7 @@ import ExpenseForm from '../components/Expenses/ExpenseForm';
 import { useNavigate } from 'react-router-dom';
 import { doc, deleteDoc, query, getDocs, collection, where } from 'firebase/firestore';
 import SpendingBreakdown from '../components/Expenses/SpendingBreakdown';
+import { ExportExpensesAsCSV } from '../utils/utils'; // Import the exportExpensesAsCSV function
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -97,12 +98,17 @@ const Dashboard = () => {
       <div className="bg-white p-4 sm:p-6 md:p-8 rounded-md shadow-md w-full max-w-4xl">
         <h1 className="text-3xl font-bold mb-4 text-center sm:text-4xl">Welcome to the Dashboard</h1>
         <div className="flex flex-col justify-center text-center items-center mb-6">
-          <button
-            className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition-colors duration-300"
-            onClick={() => logoutUser().then(() => navigate('/'))}
-          >
-            Logout
-          </button>
+          <div className="flex gap-2">
+            <button className="bg-white text-black border border-black py-2 px-4 rounded-md hover:bg-black hover:text-white transition-colors duration-300">
+              <ExportExpensesAsCSV expenses={expenses} />
+            </button>
+            <button
+              className="bg-white text-black border border-black py-2 px-4 rounded-md hover:bg-black hover:text-white transition-colors duration-300"
+              onClick={() => logoutUser().then(() => navigate('/'))}
+            >
+              Logout
+            </button>
+          </div>
           <p className="mb-4 sm:mb-0">
             You are currently logged in as <span className="font-bold">{currentUser?.email || 'Loading...'}</span>.
           </p>
