@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { getCurrentUser, logoutUser, expensesCollection, db } from '../utils/firebase';
 import ExpenseForm from '../components/Expenses/ExpenseForm';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +15,7 @@ const Dashboard = () => {
   const [selectedExpense, setSelectedExpense] = useState(null);
   const [expenseData, setExpenseData] = useState([]);
 
-  const fetchExpenseData = async (user) => {
+  const fetchExpenseData = useCallback(async (user) => {
     if (user) {
       try {
         const expensesSnapshot = await expensesCollection.where('userId', '==', user.uid).get();
@@ -31,11 +31,11 @@ const Dashboard = () => {
         console.error('Error fetching expense data:', error);
       }
     } else {
-      // Handle the case when user is null or undefined
       console.log('User not available.');
     }
-  };
-  const fetchExpenseDataVisual = async () => {
+  }, []);
+
+  const fetchExpenseDataVisual = useCallback(async () => {
     try {
       const user = await getCurrentUser();
       if (user) {
@@ -59,16 +59,18 @@ const Dashboard = () => {
     } catch (error) {
       console.error('Error fetching expense data:', error);
     }
-  };
-  const fetchUser = async () => {
+  }, []);
+
+  const fetchUser = useCallback(async () => {
     const user = await getCurrentUser();
     setCurrentUser(user);
-    fetchExpenseData(user); // Call fetchExpenseData with the fetched user
+    fetchExpenseData(user);
     fetchExpenseDataVisual();
-  };
+  }, [fetchExpenseData, fetchExpenseDataVisual]);
+
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [fetchUser]);
 
   const handleOpenModal = (expense = null) => {
     setSelectedExpense(expense);

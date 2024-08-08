@@ -6,7 +6,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF'];
 const SpendingBreakdown = ({ fetchExpenseData, expenseData, totalExpenses }) => {
   useEffect(() => {
     fetchExpenseData();
-  }, []);
+  }, [fetchExpenseData]);
 
   return (
     <div className="px-4 py-6 sm:px-6 md:px-8">
