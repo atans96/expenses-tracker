@@ -1,14 +1,14 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-
 const firebaseConfig = {
   apiKey: 'AIzaSyDM5AEvY80Dbj1Jlnw_d33ythe6LpmV4fw',
   authDomain: 'expense-tracker-fe957.firebaseapp.com',
+  databaseURL: 'https://expense-tracker-fe957-default-rtdb.asia-southeast1.firebasedatabase.app',
   projectId: 'expense-tracker-fe957',
   storageBucket: 'expense-tracker-fe957.appspot.com',
   messagingSenderId: '1066553464278',
-  appId: '1:1066553464278:web:247c80bdadcd131fa10077',
+  appId: '1:1066553464278:web:49355ee5c09a797fa10077',
 };
 
 firebase.initializeApp(firebaseConfig);
